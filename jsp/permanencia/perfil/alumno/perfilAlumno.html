@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="sisa">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SISA</title>
+    <link rel="icon" href="./img/utez/favicon.ico" />
+    <!-- Bootstrap Core CSS -->
+    <link href="../../../../components/bootstrap/dist/css/bootstrap_1.css" rel="stylesheet">
+
+
+    <!-- MetisMenu CSS -->
+    <link href="../../../../components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="../../../../css/general.css" rel="stylesheet">
+    <link href="../../../../css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../../../css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../../../../components/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../../../../components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- include the core styles -->
+    <link rel="stylesheet" href="../../../../css/alertify.core.css" />
+    <!-- include a theme, can be included into the core instead of 2 separate files -->
+    <link rel="stylesheet" href="../../../../css/sweetalert.css" />
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body
+        {
+            font-family: 'Open Sans', sans-serif;
+        }
+        .fb-profile img.fb-image-lg{
+            z-index: 0;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .fb-image-profile
+        {
+            margin: -90px 10px 0px 50px;
+            z-index: 9;
+            width: 13%;
+        }
+        @media (max-width:768px)
+        {
+            .fb-profile-text>h1{
+                font-size:14px;
+            }
+            .fb-image-profile
+            {
+                margin: -45px 10px 0px 25px;
+                z-index: 9;
+                width: 13%;
+            }
+        }
+    </style>
+    <style>
+        /* Paste this css to your style sheet file or under head tag */
+        /* This only works with JavaScript,
+        if it's not present, don't show loader */
+        .no-js #loader { display: none;  }
+        .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+        .se-pre-con {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url(./img/system/preloader.gif) center no-repeat #fff;
+        }
+    </style>
+</head>
+
+<body ng-controller="ControlPerfil" ng-init="consultarPerfil()">
+<div class="se-pre-con text-center"></div>
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav id="topMenu" class="navbar navbar-default navbar-static-top navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Navegación</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="./iniciarSesion" style="color: #FFF !important;" >Sistema Integral de Servicios Académicos | SISA</a>
+        </div>
+        <!-- /.navbar-header -->
+
+        <ul id="rightMenu" class="nav navbar-top-links navbar-right">
+
+            <li class="dropdown">
+
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" id="cerrarSesion" href="/cerrarSesion">
+                    <i class="fa fa-power-off fa-fw"></i>  Salir
+                </a>
+            </li>
+            <!-- /.dropdown -->
+        </ul>
+        <!-- /.navbar-top-links -->
+
+        <!DOCTYPE html>
+        <div id="leftMenu" class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="sidebar-search text-center hidden-xs " style="background-color: #fff;padding: 15px 0 5px 0;">
+                        <img width="100%" src="../../../../img/utez/lenguaje-incluyente.png" />
+                    </li>
+                    <li class="sidebar-search text-center" style="color: #fff;">
+                        <h5 ng-bind="perfil.nombre"></h5>
+                        <h4>Estudiante</h4>
+                    </li>
+                    <li>
+                        <a href="../../../../jsp/permanencia/seguimiento/historialAcademico/historialAcademico.jsp"><i class="fa fa-book fa-fw"></i> Historial académico</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Estadías<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="../../../../jsp/permanencia/estadia/inicioEncuesta.html">Encuesta de satisfacción</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--            <li>
+                                    <a href="./jsp/permanencia/evaluacionDocente/evaluacion/inicioEvaluacionDocente.jsp"><i class="fa fa-braille fa-fw"></i> Evaluación Docente</a>
+                                </li>-->
+                    <li>
+                        <a href="../../../../jsp/permanencia/perfil/alumno/perfilAlumno.jsp"><i class="fa fa-user-o fa-fw"></i>Mi Perfil</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+
+    </nav>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background: #345177; color: white;">
+                    <h4 class="modal-title" id="myModalLabel">Roles</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>Selecciona el rol para acceder a las funcionalidades correspondientes.</h4>
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <a href="../../../../cambiarSesion?idRolCambiar=Alumno&rolCambiar=Estudiante" style="color: white;">
+                                            <div class="col-md-8">Estudiante</div>
+                                            <div class="col-md-4 text-right"><span class="text-right"><i class="fa fa-angle-right"></i></span></div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>Estudiante.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default btn-default pull-right" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wrapper"></div>
+
+    <div id="page-wrapper">
+        <br/>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Mi perfil</div>
+            <div class="panel-body" style="padding-top: 0px;">
+                <div >
+                    <div class="row ">
+                        <div class="col-md-16" >
+                            <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>-->
+                            <div class="fb-profile">
+                                <img align="left" class="fb-image-lg"  src="../../../../img/utez/header-bg.jpg" alt="Profile image example"/>
+                                <img align="left" class="fb-image-profile thumbnail" src="../../../../img/system/photo.jpg" alt="Profile image example"/>
+                                <div class="fb-profile-text">
+                                    <h1 ng-class="{'text-danger':perfil.estadoAcademico !== 'Activo'}" style="margin-top: 0px;" ><span ng-bind="perfil.nombre + ' ' + perfil.apPaterno + ' ' + perfil.apMaterno" ></span><br/><span ng-bind="perfil.claveIdentidad"></span>  </h1>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-12" >
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Información Académica</div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-12 text-center">
+                                            <label for="" >Carrera:</label>
+                                            <h2 class="text-primary" ng-bind="carreraPerfil" ></h2>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="" >Cuatrimestre:</label>
+                                            <div ng-bind="perfil.grupo.cuatrimestre" ></div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="" >Grupo:</label>
+                                            <div ng-bind="perfil.grupo.grupo"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="" >Generación Ingreso:</label>
+                                                <div  >No. <span ng-bind="perfil.genIngreso.estado"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="" >Generación Egreso:</label>
+                                                <div>No. <span ng-bind="perfil.genEgreso.estado"></span></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="" >Plan de estudios:</label>
+                                                <div ng-bind="perfil.planEstudios" ></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="" >Estado académico:</label>
+                                                <div ng-bind="perfil.estadoAcademico"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form role="form" name="form2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Cambiar contraseña
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-4" ng-class="{'has-success': form2.nuevaContrasexa.$valid, 'has-error': form2.nuevaContrasexa.$invalid && form2.nuevaContrasexa.$dirty}">
+                                                <label class="control-label" for="nuevaContrasexa">Nueva contraseña:   </label>
+                                                <input type="password" class="form-control" name="nuevaContrasexa" id="nuevaContrasexa" ng-pattern="/^((?=.*\d)(?=.*[A-Za-z]).{8,30})$/" ng-model="usuario.nuevaContrasexa" maxlength="30" required />
+                                                <div ng-show="(form2.nuevaContrasexa.$dirty && form2.nuevaContrasexa.$invalid)" class="alert alert-warning">
+                                                    La nueva contraseña no cumple con el formato requerido, tamaño minimo de 8 y al menos 1 numero.<strong class="alert-link"> Ejemplo: abcdef123</strong>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-4" ng-class="{'has-success':form2.confirmaContrasexa.$valid, 'has-error': form2.confirmaContrasexa.$invalid && form2.confirmaContrasexa.$dirty}">
+                                                <label class="control-label" for="confirmaContrasexa">Confirmar contraseña:   </label>
+                                                <input type="password" class="form-control" name="confirmaContrasexa" id="confirmaContrasexa" ng-pattern="/^((?=.*\d)(?=.*[A-Za-z]).{8,30})$/" ng-model="usuario.confirmaContrasexa" maxlength="30" required />
+                                                <div ng-show="form2.confirmaContrasexa.$dirty && (usuario.nuevaContrasexa !== usuario.confirmaContrasexa)" class="alert alert-warning">
+                                                    <strong class="alert-link">Confirmación incorrecta</strong>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-4" ng-class="{'has-success': form2.contrasexa.$valid, 'has-error': form2.contrasexa.$invalid && form2.contrasexa.$dirty}">
+                                                <label class="control-label" for="contrasexa">Contraseña actual:   </label>
+                                                <input type="password" class="form-control" name="contrasexa" id="contrasexa" ng-model="usuario.contrasexa" maxlength="30" required />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 col-md-offset-8 text-center">
+                                                <button  class="btn btn-success" ng-disabled="!form2.$valid || (usuario.nuevaContrasexa !== usuario.confirmaContrasexa)" ng-click="modificarContrasexa()" >Modificar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <!--
+                <div  class="text-center">
+                    <img src="../../../../img/system/preloader.gif"/>
+                </div>
+            --> 
+            </div>
+        </div>
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
+<script src="../../../../components/jquery/dist/jquery.min.js"></script>
+<script>
+    //paste this code under the head tag or in a separate js file.
+    // Wait for window load
+    $(window).load(function () {
+        // Animate loader off screen
+        $(".se-pre-con").fadeOut("slow");
+        ;
+    });
+</script>
+<!--<script src="./js/configuracion.js"></script>-->
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../../../../components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="../../../../components/metisMenu/dist/metisMenu.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../../../../js/sb-admin-2.js"></script>
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>-->
+
+<script src="../../../../js/angular-1.4.6.min.js"></script>
+
+
+<!--Script Angular Perfil-->
+<script src="../../../../js/control/permanencia/perfil/ajsControlPerfil.js"></script>
+
+<script src="../../../../js/sweetalert.min_1.js"></script>
+<script src="../../../../js/SweetAlert.min.js"></script>
+<script src="../../../../js/angular-locale_es-mx.js"></script>
+<script src="../../../../js/ui-bootstrap-tpls-0.14.3.js"></script>
+
+</body>
+
+</html>

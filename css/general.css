@@ -1,0 +1,50 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 30/10/2015, 02:18:32 PM
+    Author     : Jose Narvaez CDS
+*/
+
+.sidebar ul li a.active {
+    color:#000;
+    background: #F2F2F2 !important;
+}
+body {
+    background: #F2F2F2 !important;
+}
+#page-wrapper {
+    border: 0px !important;   
+}
+
+#leftMenu{
+    position: fixed;
+    overflow-y: scroll;
+    top: 0;
+    bottom: 0;
+}
+.table > thead{
+    background: #345177;
+    color: #fff;
+}
+
+.panel-default > .panel-heading {
+    background-color:#676f77 !important;
+    color:#FFF !important;
+}
+
+/*.form-group .ng-invalid.ng-touched {
+    border-color: #a94442;
+}
+
+.form-group .ng-invalid.ng-touched:focus {
+    border-color: #843534;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+}
+
+.css-form input.ng-valid.ng-touched {
+    background-color: #78FA89;
+}*/
