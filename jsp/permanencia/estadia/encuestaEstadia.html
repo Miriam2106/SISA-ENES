@@ -224,74 +224,214 @@
                     <div>
                         <ul class="nav nav-tabs">
                             <li ng-repeat="seccion in encuesta.secciones | orderBy:'indice'"
-                                ng-class="{'active': seccion.indice === 1}">
-                                <a href=" {{ '#' + seccion.indice }}" data-toggle="tab" ng-bind="seccion.nombre"></a>
+                                ng-class="{'active': seccion.indice === 1, 'disabled': !formSeccion.$valid && seccion.indice != 1}">
+                                <a href=" {{ '#' + seccion.indice }}" ng-class="{'active': seccion.indice === 1, 'disabled': !formSeccion.$valid && seccion.indice != 1 }" data-toggle="tab" ng-bind="seccion.nombre"></a>
                             </li>
                         </ul>
                         <div class="tab-content" style="margin-top: 20px;">
                             <div class="tab-pane" ng-repeat="seccion in encuesta.secciones | orderBy:'indice'"
-                                id="{{seccion.indice}}" ng-class="{'active': seccion.indice === 1}">
-                                <p>Instrucciones: <span ng-bind="seccion.descripcion"
-                                        style="text-decoration: none;"></span></p>
-                            </div>
-                            <div class="text-center">
-                                <!--<input type="text" class="form-control" id="sexo"  value="{{perfil.sexo}}" />-->
+                                id="{{seccion.indice}}" ng-class="{'active': seccion.indice === 1, 'disabled': !formSeccion.$valid && seccion.indice > 1 }">
+                                <form role="form" name="formSeccion">
+                                    <span style="font-weight: bolder;">Instrucciones: </span>
+                                    <span ng-bind="seccion.descripcion" style="text-decoration: none;"></span>
 
-                                <div>
-                                    <label> 1 </label>
-                                    <input type="radio" required>
-                                </div>
+                                    <div style="margin-top: 20px;">
+                                        <!--<input type="text" class="form-control" id="sexo"  value="{{perfil.sexo}}" />-->
+                                        <div class="row">
+                                            <!-- itera las preguntas -->
+                                            <div class="col-xs-12 col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"
+                                                ng-repeat="pregunta in seccion.preguntas | orderBy:'indice'">
+                                                <span>{{pregunta.indice}}. {{pregunta.enunciado}}</span>
+                                                <!-- preguntas de escala -->
+                                                <div class="row" style="margin-bottom: 20px; margin-top: 20px;"
+                                                    ng-if="pregunta.tipos_respuestas == 'Escala'">
+                                                    <div class="col-xs-3 col-md-3">
+                                                        <span>Muy mala</span>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-6">
+                                                        <label class="group-radio">
+                                                            <div>
+                                                                <strong>1</strong>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" value="1" name="escala"
+                                                                    class="radio2" required>
+                                                            </div>
+                                                        </label>
+                                                        <label class="group-radio">
+                                                            <div>
+                                                                <strong>2</strong>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" value="2" name="escala"
+                                                                    class="radio2" required>
+                                                            </div>
+                                                        </label>
+                                                        <label class="group-radio">
+                                                            <div>
+                                                                <strong>3</strong>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" value="3" name="escala"
+                                                                    class="radio2" required>
+                                                            </div>
+                                                        </label>
+                                                        <label class="group-radio">
+                                                            <div>
+                                                                <strong>4</strong>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" value="4" name="escala"
+                                                                    class="radio2" required>
+                                                            </div>
+                                                        </label>
+                                                        <label class="group-radio">
+                                                            <div>
+                                                                <strong>5</strong>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" value="5" name="escala"
+                                                                    class="radio2" required>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-3 col-md-3">
+                                                        <span>Excelente</span>
+                                                    </div>
+                                                </div>
+                                                <!-- preguntas libres -->
+                                                <div style="margin-bottom: 20px; margin-top: 20px;"
+                                                    ng-if="pregunta.tipos_respuestas == 'Libre'">
+                                                    <textarea class="form-control" rows="3"required></textarea>
+
+                                                </div>
+                                                <!-- preguntas de opcion múltiple -->
+                                                <div style="margin-bottom: 20px; margin-top: 20px;"
+                                                    ng-if="pregunta.tipos_respuestas == 'Multiple'">
+                                                    <div class="form-check"
+                                                        ng-repeat="respuesta in pregunta.respuestas">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            value="{{respuesta.descripcion}}" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1"
+                                                            ng-bind="respuesta.descripcion">
+
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <!-- preguntas de Si No -->
+                                                <div class="text-center" style="margin-bottom: 20px; margin-top: 20px;"
+                                                    ng-if="pregunta.tipos_respuestas == 'SiNo'">
+                                                    <label class="checkbox-inline">
+                                                        <strong>Sí</strong>
+                                                        <input type="radio" value="Si" name="estadoResp"
+                                                            ng-model="preguntaPrueba.respuesta" class="radio2" required>
+                                                    </label>
+                                                    <label class="checkbox-inline">
+                                                        <strong>No</strong>
+                                                        <input type="radio" value="No" name="estadoResp"
+                                                            ng-model="preguntaPrueba.respuesta" class="radio2" required>
+                                                    </label>
+                                                </div>
+                                                <div ng-show="preguntaPrueba.respuesta == 'Si'">
+                                                    <div ng-repeat="subpregunta in pregunta.subpreguntas">
+                                                        <span>{{pregunta.indice}}.{{$index+1}}
+                                                            {{subpregunta.enunciado}}</span>
+                                                        <!-- preguntas libres -->
+                                                        <div style="margin-bottom: 20px; margin-top: 20px;"
+                                                            ng-if="subpregunta.tipos_respuestas == 'Numerico'">
+                                                            <input type="number" class="form-control">
+                                                        </div>
+                                                        <!-- preguntas de opcion múltiple -->
+                                                        <div style="margin-bottom: 20px; margin-top: 20px;"
+                                                            ng-if="subpregunta.tipos_respuestas == 'Multiple'">
+                                                            <div class="form-check" required
+                                                                ng-repeat="respuesta in subpregunta.respuestas">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    value="{{respuesta.descripcion}}"
+                                                                    id="defaultCheck1">
+                                                                <label class="form-check-label" for="defaultCheck1"
+                                                                    ng-bind="respuesta.descripcion">
+
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="$index == 0">
+                                        <div class="col-md-4 col-md-offset-8 text-center">
+                                            <button class="btn btn-success" ng-click=""
+                                            ng-disabled="!formSeccion.$valid"
+                                            >Siguiente</button>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="$index != 0 && $index != encuesta.secciones.length-1 ">
+                                        <div class="col-md-4 col-md-offset-8 text-center">
+                                            <button class="btn btn-warning" ng-click="">Regresar</button>
+                                            <button class="btn btn-success" ng-click="">Siguiente</button>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="$index == encuesta.secciones.length-1">
+                                        <div class="col-md-4 col-md-offset-8 text-center">
+                                            <button class="btn btn-warning" ng-click="">Regresar</button>
+                                            <button class="btn btn-success" ng-click="">Finalizar</button>
+                                        </div>
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
-                    </div>
-                    <!--
+                        <!--
                 <div  class="text-center">
                     <img src="../../../../img/system/preloader.gif"/>
                 </div>
             -->
+                    </div>
                 </div>
             </div>
+            <!-- /#page-wrapper -->
         </div>
-        <!-- /#page-wrapper -->
-    </div>
-    <!-- /#wrapper -->
+        <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
-    <script src="../../../components/jquery/dist/jquery.min.js"></script>
-    <script>
-        //paste this code under the head tag or in a separate js file.
-        // Wait for window load
-        $(window).load(function () {
-            // Animate loader off screen
-            $(".se-pre-con").fadeOut("slow");
-            ;
-        });
-    </script>
-    <!--<script src="./js/configuracion.js"></script>-->
+        <!-- jQuery -->
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
+        <script src="../../../components/jquery/dist/jquery.min.js"></script>
+        <script>
+            //paste this code under the head tag or in a separate js file.
+            // Wait for window load
+            $(window).load(function () {
+                // Animate loader off screen
+                $(".se-pre-con").fadeOut("slow");
+                ;
+            });
+        </script>
+        <!--<script src="./js/configuracion.js"></script>-->
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../../components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../../../components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../../../components/metisMenu/dist/metisMenu.min.js"></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../../../components/metisMenu/dist/metisMenu.min.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="../../../js/sb-admin-2.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="../../../js/sb-admin-2.js"></script>
 
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>-->
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>-->
 
-    <script src="../../../js/angular-1.4.6.min.js"></script>
+        <script src="../../../js/angular-1.4.6.min.js"></script>
 
 
-    <!--Script Angular Perfil-->
-    <script src="../../../js/control/permanencia/estadia/ajsControlEncuestas.js"></script>
+        <!--Script Angular Perfil-->
+        <script src="../../../js/control/permanencia/estadia/ajsControlEncuestas.js"></script>
 
 
-    <script src="../../../js/sweetalert.min_1.js"></script>
-    <script src="../../../js/SweetAlert.min.js"></script>
-    <script src="../../../js/angular-locale_es-mx.js"></script>
-    <script src="../../../js/ui-bootstrap-tpls-0.14.3.js"></script>
+        <script src="../../../js/sweetalert.min_1.js"></script>
+        <script src="../../../js/SweetAlert.min.js"></script>
+        <script src="../../../js/angular-locale_es-mx.js"></script>
+        <script src="../../../js/ui-bootstrap-tpls-0.14.3.js"></script>
 
 </body>
 
