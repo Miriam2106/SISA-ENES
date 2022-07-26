@@ -35,6 +35,7 @@
     <!-- include a theme, can be included into the core instead of 2 separate files -->
     <link rel="stylesheet" href="../../../css/sweetalert.css" />
 
+    <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
 
@@ -102,6 +103,8 @@
 
 <body ng-controller="ControlReportes" ng-init="consultarReportes()">
     <script>
+        // Gráfica de escala
+
         const labels = [
             '1',
             '2',
@@ -136,6 +139,7 @@
             }
         };
 
+        // Gráfica de Sí / No - barras con línea
         const labels2 = [
             'Sí',
             'No',
@@ -174,6 +178,117 @@
                 }
             },
         };
+
+        // Gráfica de Sí / No - pastel
+
+        const labels3 = [
+            'Sí',
+            'No'
+        ];
+
+        const data3 = {
+            labels: labels3,
+            datasets: [{
+                label: 'Gráfica de los valores',
+                backgroundColor: [
+                    'rgb(139, 65, 222)', 'rgb(255, 99, 132)'
+                ],
+                data: [2, 1],
+                hoverOffset: 4
+            }]
+        };
+
+        const config3 = {
+            type: 'pie',
+            data: data3,
+
+        };
+
+        //Gráficas de reportes generales
+        const labels4 = ['1', '2', '3', '4'];
+
+        const data4 = {
+            labels: labels4,
+            datasets: [
+                {
+                    type: 'line',
+                    label: 'Media generacional',
+                    fill: false,
+                    data: [5, 5, 5, 5],
+                    order: 0,
+                    borderColor: 'rgb(102, 205, 170)'
+                },
+                {
+                    label: 'TSU DSM',
+                    data: [2, 1, 2, 10],
+                    borderColor: 'rgb(135, 206, 235)',
+                    backgroundColor: 'rgb(135, 206, 235)',
+                },
+                {
+                    label: 'TSU IRD',
+                    data: [2, 2, 2, 6],
+                    borderColor: 'rgb(2, 111, 111)',
+                    backgroundColor: 'rgb(2, 111, 111)',
+                },
+                {
+                    label: 'TSU DD',
+                    data: [8, 5, 4, 8],
+                    borderColor: 'rgb(0, 139, 139)',
+                    backgroundColor: 'rgb(0, 139, 139)',
+                },
+                {
+                    label: 'TSU DM',
+                    data: [1, 3, 4, 14],
+                    borderColor: 'rgb(176, 196, 222)',
+                    backgroundColor: 'rgb(176, 196, 222)',
+                }
+            ]
+        };
+
+        const config4 = {
+            type: 'bar',
+            data: data4,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 16,
+                            stepSize: 2
+                        },
+                        title: {
+                            display: true,
+                            text: "Número de visitas",
+                            font: {
+                                weight: "bold",
+                                size: 20
+                            }
+                        }
+                    }],
+                    xAxes: [{
+                        title: {
+                            display: true,
+                            text: "Número de estudiantes",
+                            font: {
+                                weight: "bold",
+                                size: 20
+                            }
+                        }
+                    }]
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Número de asesorías'
+                    }
+                }
+            },
+        };
+
     </script>
 
     <div class="se-pre-con text-center"></div>
@@ -360,11 +475,21 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             ¿Tu asesora / asesor universitario te informó y orientó acerca del proyecto,
-                                            los
-                                            formatos y trámites que debías seguir?
+                                            los formatos y trámites que debías seguir?
                                         </div>
                                         <div class="panel-body">
-                                            <canvas id="ctx"></canvas>
+                                            <canvas id="myChart3"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            Número de visitas que las y los asesores universitarios realizaron a los
+                                            estudiantes en la empresa o institución
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="myChart4"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -438,6 +563,20 @@
         const myChart2 = new Chart(
             miCanvas2,
             config2
+        );
+
+        let miCanvas3 = document.getElementById('myChart3')
+
+        const myChart3 = new Chart(
+            miCanvas3,
+            config3
+        );
+
+        let miCanvas4 = document.getElementById('myChart4')
+
+        const myChart4 = new Chart(
+            miCanvas4,
+            config4
         );
 
     </script>

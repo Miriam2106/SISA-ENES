@@ -314,7 +314,7 @@
                                                                 <strong>1</strong>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" value="1" name="escala"
+                                                                <input type="radio" value="1" name="{{ 'escala' + pregunta.indice }}"
                                                                     class="radio2" required>
                                                             </div>
                                                         </label>
@@ -323,7 +323,7 @@
                                                                 <strong>2</strong>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" value="2" name="escala"
+                                                                <input type="radio" value="2" name="{{ 'escala' + pregunta.indice }}"
                                                                     class="radio2" required>
                                                             </div>
                                                         </label>
@@ -332,7 +332,7 @@
                                                                 <strong>3</strong>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" value="3" name="escala"
+                                                                <input type="radio" value="3" name="{{ 'escala' + pregunta.indice }}"
                                                                     class="radio2" required>
                                                             </div>
                                                         </label>
@@ -341,7 +341,7 @@
                                                                 <strong>4</strong>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" value="4" name="escala"
+                                                                <input type="radio" value="4" name="{{ 'escala' + pregunta.indice }}"
                                                                     class="radio2" required>
                                                             </div>
                                                         </label>
@@ -350,7 +350,7 @@
                                                                 <strong>5</strong>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" value="5" name="escala"
+                                                                <input type="radio" value="5" name="{{ 'escala' + pregunta.indice }}"
                                                                     class="radio2" required>
                                                             </div>
                                                         </label>
@@ -394,13 +394,13 @@
                                                     ng-if="pregunta.tipos_respuestas == 'SiNo'">
                                                     <label class="checkbox-inline">
                                                         <strong>Sí</strong>
-                                                        <input type="radio" value="Si" name="estadoResp"
-                                                            ng-model="preguntaPrueba.respuesta" class="radio2" required>
+                                                        <input type="radio" value="Si" name="{{ 'estadoResp' + pregunta.indice }}" ng-model="{{ 'resp' + pregunta.indice }}"
+                                                            class="radio2" required>
                                                     </label>
                                                     <label class="checkbox-inline">
                                                         <strong>No</strong>
-                                                        <input type="radio" value="No" name="estadoResp"
-                                                            ng-model="preguntaPrueba.respuesta" class="radio2" required>
+                                                        <input type="radio" value="No" name="{{ 'estadoResp' + pregunta.indice }}"
+                                                            class="radio2" required>
                                                     </label>
                                                 </div>
                                                 <!-- subpreguntas -->
