@@ -221,7 +221,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading"> ENCUESTA DE SATISFACCIÓN DE ESTUDIANTES EN ESTADÍA</div>
                 <div class="panel-body">
-                    <div>
+                    <div ng-show="verEncuesta">
                         <ul class="nav nav-tabs">
                             <li ng-repeat="seccion in encuesta.secciones | orderBy:'indice'"
                                 ng-class="{'active': seccion.indice === 1, 'disabled': !formSeccion.$valid && seccion.indice != 1}">

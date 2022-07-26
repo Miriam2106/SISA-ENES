@@ -44,34 +44,35 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
-        body
-        {
+        body {
             font-family: 'Open Sans', sans-serif;
         }
-        .fb-profile img.fb-image-lg{
+
+        .fb-profile img.fb-image-lg {
             z-index: 0;
             width: 100%;
             margin-bottom: 10px;
         }
-        .fb-image-profile
-        {
+
+        .fb-image-profile {
             margin: -90px 10px 0px 50px;
             z-index: 9;
             width: 13%;
         }
-        @media (max-width:768px)
-        {
-            .fb-profile-text>h1{
-                font-size:14px;
+
+        @media (max-width:768px) {
+            .fb-profile-text>h1 {
+                font-size: 14px;
             }
-            .fb-image-profile
-            {
+
+            .fb-image-profile {
                 margin: -45px 10px 0px 25px;
                 z-index: 9;
                 width: 13%;
             }
         }
-        #descripcionEncuesta{
+
+        #descripcionEncuesta {
             font-size: 18px;
         }
     </style>
@@ -79,8 +80,17 @@
         /* Paste this css to your style sheet file or under head tag */
         /* This only works with JavaScript,
         if it's not present, don't show loader */
-        .no-js #loader { display: none;  }
-        .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+        .no-js #loader {
+            display: none;
+        }
+
+        .js #loader {
+            display: block;
+            position: absolute;
+            left: 100px;
+            top: 0;
+        }
+
         .se-pre-con {
             position: fixed;
             left: 0px;
@@ -94,192 +104,434 @@
 </head>
 
 <body ng-controller="ControlEncuesta" ng-init="consultarEncuesta()">
-<div class="se-pre-con text-center"></div>
-<div id="wrapper">
+    <div class="se-pre-con text-center"></div>
+    <div id="wrapper">
 
-    <!-- Navigation -->
-    <nav id="topMenu" class="navbar navbar-default navbar-static-top navbar-fixed-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Navegación</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="./iniciarSesion" style="color: #FFF !important;" >Sistema Integral de Servicios Académicos | SISA</a>
-        </div>
-        <!-- /.navbar-header -->
+        <!-- Navigation -->
+        <nav id="topMenu" class="navbar navbar-default navbar-static-top navbar-fixed-top" role="navigation"
+            style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Navegación</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="./iniciarSesion" style="color: #FFF !important;">Sistema Integral de
+                    Servicios Académicos | SISA</a>
+            </div>
+            <!-- /.navbar-header -->
 
-        <ul id="rightMenu" class="nav navbar-top-links navbar-right">
+            <ul id="rightMenu" class="nav navbar-top-links navbar-right">
 
-            <li class="dropdown">
+                <li class="dropdown">
 
-            </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" id="cerrarSesion" href="/cerrarSesion">
-                    <i class="fa fa-power-off fa-fw"></i>  Salir
-                </a>
-            </li>
-            <!-- /.dropdown -->
-        </ul>
-        <!-- /.navbar-top-links -->
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" id="cerrarSesion" href="/cerrarSesion">
+                        <i class="fa fa-power-off fa-fw"></i> Salir
+                    </a>
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
 
-        <!DOCTYPE html>
-        <div id="leftMenu" class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu">
-                    <li class="sidebar-search text-center hidden-xs " style="background-color: #fff;padding: 15px 0 5px 0;">
-                        <img width="100%" src="../../../img/utez/lenguaje-incluyente.png" />
-                    </li>
-                    <li class="sidebar-search text-center" style="color: #fff;">
-                        <h5>Miriam Guadalupe Saucedo Bustamante</h5>
-                        <h4>Estudiante</h4>
-                    </li>
-                    <li>
-                        <a href="../../../jsp/permanencia/seguimiento/historialAcademico/historialAcademico.jsp"><i class="fa fa-book fa-fw"></i> Historial académico</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Estadías<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Encuesta de satisfacción</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!--            <li>
+            <!DOCTYPE html>
+            <div id="leftMenu" class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search text-center hidden-xs "
+                            style="background-color: #fff;padding: 15px 0 5px 0;">
+                            <img width="100%" src="../../../img/utez/lenguaje-incluyente.png" />
+                        </li>
+                        <li class="sidebar-search text-center" style="color: #fff;">
+                            <h5>Miriam Guadalupe Saucedo Bustamante</h5>
+                            <h4>Estudiante</h4>
+                        </li>
+                        <li>
+                            <a href="../../../jsp/permanencia/seguimiento/historialAcademico/historialAcademico.jsp"><i
+                                    class="fa fa-book fa-fw"></i> Historial académico</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Estadías<span
+                                    class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Encuestas<span
+                                            class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="../../../jsp/permanencia/estadia/inicioEncuesta.html">Encuesta de
+                                                satisfacción de estadías</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="../../../jsp/permanencia/seguimiento/reportes.html"><i
+                                    class="fa fa-book fa-fw"></i> Reportes</a>
+                        </li>
+                        <!--            <li>
                                     <a href="./jsp/permanencia/evaluacionDocente/evaluacion/inicioEvaluacionDocente.jsp"><i class="fa fa-braille fa-fw"></i> Evaluación Docente</a>
                                 </li>-->
-                    <li>
-                        <a href="../../../jsp/permanencia/perfil/alumno/perfilAlumno.html"><i class="fa fa-user-o fa-fw"></i>Mi Perfil</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.sidebar-collapse -->
-        </div>
-        <!-- /.navbar-static-side -->
-
-    </nav>
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header" style="background: #345177; color: white;">
-                    <h4 class="modal-title" id="myModalLabel">Roles</h4>
+                        <li>
+                            <a href="../../../jsp/permanencia/perfil/alumno/perfilAlumno.html"><i
+                                    class="fa fa-user-o fa-fw"></i>Mi Perfil</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="modal-body">
-                    <h4>Selecciona el rol para acceder a las funcionalidades correspondientes.</h4>
-                    <div class="row">
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
 
-                        <div class="col-md-12">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                    <div class="row">
-                                        <a href="../../../../cambiarSesion?idRolCambiar=Alumno&rolCambiar=Estudiante" style="color: white;">
-                                            <div class="col-md-8">Estudiante</div>
-                                            <div class="col-md-4 text-right"><span class="text-right"><i class="fa fa-angle-right"></i></span></div>
-                                        </a>
+        </nav>
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #345177; color: white;">
+                        <h4 class="modal-title" id="myModalLabel">Roles</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Selecciona el rol para acceder a las funcionalidades correspondientes.</h4>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <a href="../../../../cambiarSesion?idRolCambiar=Alumno&rolCambiar=Estudiante"
+                                                style="color: white;">
+                                                <div class="col-md-8">Estudiante</div>
+                                                <div class="col-md-4 text-right"><span class="text-right"><i
+                                                            class="fa fa-angle-right"></i></span></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>Estudiante.</p>
                                     </div>
                                 </div>
-                                <div class="panel-body">
-                                    <p>Estudiante.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default btn-default pull-right"
+                            data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="wrapper"></div>
+
+        <div id="page-wrapper">
+            <br />
+            <div class="panel panel-primary">
+                <div class="panel-heading"> ENCUESTA DE SATISFACCIÓN DE ESTUDIANTES EN ESTADÍA</div>
+                <div class="panel-body">
+                    <div ng-show="!verEncuesta">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h2 class="text-primary" style="margin-bottom: 30px; font-weight: bolder;">
+                                    Bienvenido(a) a la encuesta de <span ng-bind="encuesta.nombre"></span>
+                                </h2>
+                            </div>
+                            <div class="col-md-12 text-center" id="descripcionEncuesta" style="margin-bottom: 30px;">
+                                <p>
+                                    Tomando en cuenta TU PERIODO DE ESTADÍA, expresa tu opinión acerca de los distintos
+                                    sectores que estuvieron presentes en cada uno de los siguientes aspectos.
+                                </p>
+                                <p class="text-red">
+                                    Recuerda que todas las preguntas son obligatorias
+                                </p>
+                            </div>
+                            <div class="col-md-12 text-center" id="descripcionEncuesta" style="margin-bottom: 20px;">
+                                <p ng-bind="encuesta.nombreAlumno" style="font-weight: bolder;"></p>
+                                <p ng-bind="encuesta.carreraPerfil"></p>
+                                <p ng-bind="encuesta.grupo"></p>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-success" ng-click="comenzarEncuesta()">Comenzar</button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 40px; padding: 20px;">
+                            <div class="alert alert-warning text-center" role="alert" style="font-weight: bolder;">
+                                Para asegurar el correcto funcionamiento se recomienda no hacer uso del navegador
+                                Internet Explorer
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="verEncuesta">
+                        <ul class="nav nav-tabs">
+                            <li ng-repeat="seccion in encuesta.secciones | orderBy:'indice'"
+                                ng-class="{'active': seccion.indice === 1, 'disabled': !formSeccion.$valid && seccion.indice != 1}">
+                                <a href=" {{ '#' + seccion.indice }}"
+                                    data-toggle="tab" ng-bind="seccion.nombre"></a>
+                            </li>
+                            <li>
+                                <a href="#finalizar" data-toggle="tab">Finalizar</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" style="margin-top: 20px;">
+                            <div class="tab-pane" ng-repeat="seccion in encuesta.secciones | orderBy:'indice'"
+                                id="{{seccion.indice}}"
+                                ng-class="{'active': seccion.indice === 1, 'disabled': !formSeccion.$valid && seccion.indice != 1 }">
+                                <form role="form" name="formSeccion">
+                                    <div>
+                                        <span style="font-weight: bolder;">Instrucciones: </span>
+                                        <span ng-bind="seccion.descripcion"></span>
+                                    </div>
+                                    <p ng-if="seccion.nombre == 'Empresa'" style="margin-top: 10px;">
+                                        <span style="font-weight: bolder;">Nombre de la empresa: </span>
+                                        <span class="text-primary" style="font-weight: bolder;">UNIVERSIDAD TECNOLÓGICA
+                                            EMILIANO ZAPATA</span>
+                                    </p>
+                                    <p ng-if="seccion.nombre == 'Asesora / Asesor'" style="margin-top: 10px;">
+                                        <span style="font-weight: bolder;">Nombre de la asesora / asesor: </span>
+                                        <span class="text-primary" style="font-weight: bolder;">MIGUEL ÁNGEL MORENO
+                                            VELÁSQUEZ</span>
+                                    </p>
+                                    <div style="margin-top: 20px;">
+                                        <!--<input type="text" class="form-control" id="sexo"  value="{{perfil.sexo}}" />-->
+                                        <div class="row">
+                                            <!-- itera las preguntas -->
+                                            <div class="col-xs-12 col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"
+                                                style="height: 150px;"
+                                                ng-repeat="pregunta in seccion.preguntas | orderBy:'indice'">
+                                                <span>{{pregunta.indice}}. {{pregunta.enunciado}}</span>
+                                                <!-- preguntas de escala -->
+                                                <div class="row" style="margin-bottom: 20px; margin-top: 20px;"
+                                                    ng-if="pregunta.tipos_respuestas == 'Escala'">
+                                                    <div class="col-xs-3 col-md-3">
+                                                        <span>Muy mala</span>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-6">
+                                                        <label class="group-radio">
+                                                            <div>
+                                                                <strong>1</strong>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" value="1" name="escala"
+                                                                    class="radio2" required>
+                                                            </div>
+                                                        </label>
+                                                        <label class="group-radio">
+                                                            <div>
+                                                                <strong>2</strong>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" value="2" name="escala"
+                                                                    class="radio2" required>
+                                                            </div>
+                                                        </label>
+                                                        <label class="group-radio">
+                                                            <div>
+                                                                <strong>3</strong>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" value="3" name="escala"
+                                                                    class="radio2" required>
+                                                            </div>
+                                                        </label>
+                                                        <label class="group-radio">
+                                                            <div>
+                                                                <strong>4</strong>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" value="4" name="escala"
+                                                                    class="radio2" required>
+                                                            </div>
+                                                        </label>
+                                                        <label class="group-radio">
+                                                            <div>
+                                                                <strong>5</strong>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" value="5" name="escala"
+                                                                    class="radio2" required>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-3 col-md-3">
+                                                        <span>Excelente</span>
+                                                    </div>
+                                                </div>
+                                                <!-- preguntas de select -->
+                                                <div style="margin-bottom: 20px; margin-top: 20px;"
+                                                    ng-if="pregunta.tipos_respuestas == 'Select'" class="form-group">
+                                                    <select class="form-control" ng-model="respuesta" required>
+                                                        <option selected value="">Selecciona...</option>
+                                                        <option ng-repeat="respuesta in pregunta.respuestas"
+                                                            value="{{respuesta.id}}">
+                                                            {{respuesta.descripcion}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <!-- preguntas libres -->
+                                                <div style="margin-bottom: 20px; margin-top: 20px;"
+                                                    ng-if="pregunta.tipos_respuestas == 'Libre'">
+                                                    <textarea class="form-control" rows="3" required></textarea>
+
+                                                </div>
+                                                <!-- preguntas de opcion múltiple -->
+                                                <div style="margin-bottom: 20px; margin-top: 20px;"
+                                                    ng-if="pregunta.tipos_respuestas == 'Multiple'">
+                                                    <div class="form-check"
+                                                        ng-repeat="respuesta in pregunta.respuestas">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            value="{{respuesta.descripcion}}" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1"
+                                                            ng-bind="respuesta.descripcion">
+
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <!-- preguntas de Si No -->
+                                                <div class="text-center" style="margin-bottom: 20px; margin-top: 20px;"
+                                                    ng-if="pregunta.tipos_respuestas == 'SiNo'">
+                                                    <label class="checkbox-inline">
+                                                        <strong>Sí</strong>
+                                                        <input type="radio" value="Si" name="estadoResp"
+                                                            ng-model="preguntaPrueba.respuesta" class="radio2" required>
+                                                    </label>
+                                                    <label class="checkbox-inline">
+                                                        <strong>No</strong>
+                                                        <input type="radio" value="No" name="estadoResp"
+                                                            ng-model="preguntaPrueba.respuesta" class="radio2" required>
+                                                    </label>
+                                                </div>
+                                                <!-- subpreguntas -->
+                                                <div ng-show="preguntaPrueba.respuesta == 'Si'">
+                                                    <div ng-repeat="subpregunta in pregunta.subpreguntas"
+                                                        style="height: 150px;">
+                                                        <span>{{pregunta.indice}}.{{$index+1}}
+                                                            {{subpregunta.enunciado}}</span>
+                                                        <!-- preguntas libres -->
+                                                        <div style="margin-bottom: 20px; margin-top: 20px;"
+                                                            ng-if="subpregunta.tipos_respuestas == 'Numerico'">
+                                                            <input type="number" class="form-control">
+                                                        </div>
+                                                        <!-- preguntas de opcion múltiple -->
+                                                        <div style="margin-bottom: 20px; margin-top: 20px;"
+                                                            ng-if="subpregunta.tipos_respuestas == 'Multiple'">
+                                                            <div class="form-check" required
+                                                                ng-repeat="respuesta in subpregunta.respuestas">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    value="{{respuesta.descripcion}}"
+                                                                    id="defaultCheck1">
+                                                                <label class="form-check-label" for="defaultCheck1"
+                                                                    ng-bind="respuesta.descripcion">
+
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="$index == 0">
+                                        <div class="col-md-4 col-md-offset-8 text-center">
+                                            <button class="btn btn-success" ng-click=""
+                                                ng-disabled="!formSeccion.$valid">Siguiente</button>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="$index != 0 && $index != encuesta.secciones.length-1 ">
+                                        <div class="col-md-4 col-md-offset-8 text-center">
+                                            <button class="btn btn-warning" ng-click="">Regresar</button>
+                                            <button ng-disabled="!formSeccion.$valid" class="btn btn-success"
+                                                ng-click="">Siguiente</button>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="$index == encuesta.secciones.length-1">
+                                        <div class="col-md-4 col-md-offset-8 text-center">
+                                            <button class="btn btn-warning" ng-click="">Regresar</button>
+                                            <button ng-disabled="!formSeccion.$valid" class="btn btn-success"
+                                                ng-click="">Finalizar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane" id="finalizar">
+                                <div class="row" style="padding: 20px;">
+                                    <div class="alert alert-warning text-center" role="alert"
+                                        style="font-weight: bolder;">
+                                        Finalizar encuesta.
+                                    </div>
+                                    <div class="text-center">
+                                        <img src="../../../img/utez/pregunta.PNG" alt="" style="margin-bottom: 30px;">
+                                        <h3 style="font-weight: bolder; margin-bottom: 20px;">¿Estás seguro(a) de
+                                            finalizar la encuesta?
+                                        </h3>
+                                        <p style="margin-bottom: 20px;">Una vez enviadas tus respuestas no podrán ser
+                                            modificadas</p>
+                                        <div class="col-md-12 text-center">
+                                            <button type="button" class="btn btn-secondary"
+                                                ng-click="">Cancelar</button>
+                                            <button type="button" class="btn btn-danger" ng-click="">Aceptar</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-default btn-default pull-right" data-dismiss="modal">Cerrar</button>
-                </div>
+                        <!-- 
+            <div  class="text-center">
+                <img src="../../../../img/system/preloader.gif"/>
             </div>
-        </div>
-    </div>
-    <div id="wrapper"></div>
-
-    <div id="page-wrapper">
-        <br/>
-        <div class="panel panel-primary">
-            <div class="panel-heading"> ENCUESTA DE SATISFACCIÓN DE ESTUDIANTES EN ESTADÍA</div>
-            <div class="panel-body">
-                <div >
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <h2 class="text-primary" style="margin-bottom: 30px; font-weight: bolder;">
-                                Bienvenido(a) a la encuesta de <span ng-bind="encuesta.nombre"></span>
-                            </h2>
-                        </div>
-                        <div class="col-md-12 text-center" id="descripcionEncuesta" style="margin-bottom: 30px;">
-                            <p>
-                                Tomando en cuenta TU PERIODO DE ESTADÍA, expresa tu opinión acerca de los distintos sectores que estuvieron presentes en cada uno de los siguientes aspectos.
-                            </p>
-                            <p class="text-red">
-                                Recuerda que todas las preguntas son obligatorias
-                            </p>
-                        </div>
-                        <div class="col-md-12 text-center" id="descripcionEncuesta"  style="margin-bottom: 20px;">
-                            <p ng-bind="encuesta.nombreAlumno" style="font-weight: bolder;"></p>
-                            <p ng-bind="encuesta.carreraPerfil"></p>
-                            <p ng-bind="encuesta.grupo"></p>
-                        </div>
-                        <div class="col-md-12 text-center">
-                            <button  class="btn btn-success" ng-click="comenzarEncuesta()">Comenzar</button>
-                        </div>
+        -->
                     </div>
-                    <div class="row" style="margin-top: 40px; padding: 20px;">
-                        <div class="alert alert-warning text-center" role="alert" style="font-weight: bolder;">
-                            Para asegurar el correcto funcionamiento se recomienda no hacer uso del navegador Internet Explorer 
-                          </div>
-                    </div>
-                </div>
-                <!--
+                    <!--
                 <div  class="text-center">
                     <img src="../../../../img/system/preloader.gif"/>
                 </div>
-            --> 
+            -->
+                </div>
             </div>
         </div>
+        <!-- /#page-wrapper -->
     </div>
-    <!-- /#page-wrapper -->
-</div>
-<!-- /#wrapper -->
+    <!-- /#wrapper -->
 
-<!-- jQuery -->
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
-<script src="../../../components/jquery/dist/jquery.min.js"></script>
-<script>
-    //paste this code under the head tag or in a separate js file.
-    // Wait for window load
-    $(window).load(function () {
-        // Animate loader off screen
-        $(".se-pre-con").fadeOut("slow");
-        ;
-    });
-</script>
-<!--<script src="./js/configuracion.js"></script>-->
+    <!-- jQuery -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
+    <script src="../../../components/jquery/dist/jquery.min.js"></script>
+    <script>
+        //paste this code under the head tag or in a separate js file.
+        // Wait for window load
+        $(window).load(function () {
+            // Animate loader off screen
+            $(".se-pre-con").fadeOut("slow");
+            ;
+        });
+    </script>
+    <!--<script src="./js/configuracion.js"></script>-->
 
-<!-- Bootstrap Core JavaScript -->
-<script src="../../../components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../../components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<!-- Metis Menu Plugin JavaScript -->
-<script src="../../../components/metisMenu/dist/metisMenu.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../../components/metisMenu/dist/metisMenu.min.js"></script>
 
-<!-- Custom Theme JavaScript -->
-<script src="../../../js/sb-admin-2.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="../../../js/sb-admin-2.js"></script>
 
-<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>-->
 
-<script src="../../../js/angular-1.4.6.min.js"></script>
+    <script src="../../../js/angular-1.4.6.min.js"></script>
 
 
-<!--Script Angular Perfil-->
-<script src="../../../js/control/permanencia/estadia/ajsControlEncuestas.js"></script>
+    <!--Script Angular Perfil-->
+    <script src="../../../js/control/permanencia/estadia/ajsControlEncuestas.js"></script>
 
 
-<script src="../../../js/sweetalert.min_1.js"></script>
-<script src="../../../js/SweetAlert.min.js"></script>
-<script src="../../../js/angular-locale_es-mx.js"></script>
-<script src="../../../js/ui-bootstrap-tpls-0.14.3.js"></script>
+    <script src="../../../js/sweetalert.min_1.js"></script>
+    <script src="../../../js/SweetAlert.min.js"></script>
+    <script src="../../../js/angular-locale_es-mx.js"></script>
+    <script src="../../../js/ui-bootstrap-tpls-0.14.3.js"></script>
 
 </body>
 

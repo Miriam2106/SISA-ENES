@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="sisa">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SISA</title>
+    <link rel="icon" href="./img/utez/favicon.ico" />
+    <!-- Bootstrap Core CSS -->
+    <link href="../../../components/bootstrap/dist/css/bootstrap_1.css" rel="stylesheet">
+
+
+    <!-- MetisMenu CSS -->
+    <link href="../../../components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="../../../css/general.css" rel="stylesheet">
+    <link href="../../../css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../../css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../../../components/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../../../components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- include the core styles -->
+    <link rel="stylesheet" href="../../../css/alertify.core.css" />
+    <!-- include a theme, can be included into the core instead of 2 separate files -->
+    <link rel="stylesheet" href="../../../css/sweetalert.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .fb-profile img.fb-image-lg {
+            z-index: 0;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .fb-image-profile {
+            margin: -90px 10px 0px 50px;
+            z-index: 9;
+            width: 13%;
+        }
+
+        @media (max-width:768px) {
+            .fb-profile-text>h1 {
+                font-size: 14px;
+            }
+
+            .fb-image-profile {
+                margin: -45px 10px 0px 25px;
+                z-index: 9;
+                width: 13%;
+            }
+        }
+    </style>
+    <style>
+        /* Paste this css to your style sheet file or under head tag */
+        /* This only works with JavaScript,
+        if it's not present, don't show loader */
+        .no-js #loader {
+            display: none;
+        }
+
+        .js #loader {
+            display: block;
+            position: absolute;
+            left: 100px;
+            top: 0;
+        }
+
+        .se-pre-con {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url(./img/system/preloader.gif) center no-repeat #fff;
+        }
+    </style>
+</head>
+
+<body ng-controller="ControlReportes" ng-init="consultarReportes()">
+    <script>
+        const labels = [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+        ];
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Número de estudiantes',
+                backgroundColor: 'rgb(139, 65, 222, 0.2)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 0, 1, 0, 2],
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 3,
+                            stepSize: 1
+                        },
+                    }]
+                }
+            }
+        };
+
+        const labels2 = [
+            'Sí',
+            'No',
+        ];
+
+        const data2 = {
+            labels: labels2,
+            datasets: [{
+                type: 'bar',
+                label: 'Valores',
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                data: [1, 2],
+            }, {
+                type: 'line',
+                label: 'Line Dataset',
+                fill: false,
+                data: [1, 1],
+                order: 1,
+                borderColor: 'rgb(54, 162, 235)'
+            }]
+        };
+
+        const config2 = {
+            type: 'bar',
+            data: data2,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 3,
+                            stepSize: 1
+                        },
+                    }]
+                }
+            },
+        };
+    </script>
+
+    <div class="se-pre-con text-center"></div>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav id="topMenu" class="navbar navbar-default navbar-static-top navbar-fixed-top" role="navigation"
+            style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Navegación</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="./iniciarSesion" style="color: #FFF !important;">Sistema Integral de
+                    Servicios Académicos | SISA</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul id="rightMenu" class="nav navbar-top-links navbar-right">
+
+                <li class="dropdown">
+
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" id="cerrarSesion" href="/cerrarSesion">
+                        <i class="fa fa-power-off fa-fw"></i> Salir
+                    </a>
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <!DOCTYPE html>
+            <div id="leftMenu" class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search text-center hidden-xs "
+                            style="background-color: #fff;padding: 15px 0 5px 0;">
+                            <img width="100%" src="../../../../img/utez/lenguaje-incluyente.png" />
+                        </li>
+                        <li class="sidebar-search text-center" style="color: #fff;">
+                            <h5 ng-bind="perfil.nombre"></h5>
+                            <h4>Estudiante</h4>
+                        </li>
+                        <li>
+                            <a href="../../../../jsp/permanencia/seguimiento/historialAcademico/historialAcademico.jsp"><i
+                                    class="fa fa-book fa-fw"></i> Historial académico</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Estadías<span
+                                    class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Encuestas<span
+                                            class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="../../../../jsp/permanencia/estadia/inicioEncuesta.html">Encuesta
+                                                de satisfacción de estadías</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="reportes.html"><i class="fa fa-book fa-fw"></i> Reportes</a>
+                        </li>
+                        <!--            <li>
+                                    <a href="./jsp/permanencia/evaluacionDocente/evaluacion/inicioEvaluacionDocente.jsp"><i class="fa fa-braille fa-fw"></i> Evaluación Docente</a>
+                                </li>-->
+                        <li>
+                            <a href="../../../../jsp/permanencia/perfil/alumno/perfilAlumno.html"><i
+                                    class="fa fa-user-o fa-fw"></i>Mi Perfil</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+
+        </nav>
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #345177; color: white;">
+                        <h4 class="modal-title" id="myModalLabel">Roles</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Selecciona el rol para acceder a las funcionalidades correspondientes.</h4>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <a href="../../../../cambiarSesion?idRolCambiar=Alumno&rolCambiar=Estudiante"
+                                                style="color: white;">
+                                                <div class="col-md-8">Estudiante</div>
+                                                <div class="col-md-4 text-right"><span class="text-right"><i
+                                                            class="fa fa-angle-right"></i></span></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>Estudiante.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default btn-default pull-right"
+                            data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="wrapper"></div>
+        <div id="page-wrapper">
+            <br />
+            <div class="panel panel-primary">
+                <div class="panel-heading"> ENCUESTA DE SATISFACCIÓN DE ESTUDIANTES EN ESTADÍA</div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a href="#reporteGeneral" role="tab" data-toggle="tab">
+                                    General
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a href="#reporteAsesores" role="tab" data-toggle="tab">
+                                    Asesores
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-pane" id="reporteGeneral">
+                            general
+                        </div>
+                        <div class="tab-pane active" id="reporteAsesores">
+                            <div class="row">
+                                <div class="col-md-4 form-inline" style="margin-bottom: 20px; margin-top: 20px;">
+                                    <span style="font-weight: bolder;">Filtrar: </span>
+                                    <select class="form-control" ng-model="division" required>
+                                        <option selected value="">Selecciona...</option>
+                                        <option ng-repeat="division in divisiones" value="{{division.id}}">
+                                            {{division.nombre}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style=" margin-bottom: 20px;">
+                                    <span style="font-weight: bolder;">Asesor:</span><span> Miguel Moreno</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            ¿En general la atención y/o orientación de tu asesora / asesor
+                                            universitario, te pareció?
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="myChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            Tu asesora o asesor universitario te presentó en la empresa o institución al
+                                            inicio de tu estadía (vía correo electrónico)?
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="myChart2"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            ¿Tu asesora / asesor universitario te informó y orientó acerca del proyecto,
+                                            los
+                                            formatos y trámites que debías seguir?
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="ctx"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--
+            <div  class="text-center">
+                <img src="../../../../img/system/preloader.gif"/>
+            </div>
+        -->
+                </div>
+                <!--
+<div  class="text-center">
+    <img src="../../../../img/system/preloader.gif"/>
+</div>
+-->
+            </div>
+        </div>
+    </div>
+    <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
+    <script src="../../../../components/jquery/dist/jquery.min.js"></script>
+    <script>
+        //paste this code under the head tag or in a separate js file.
+        // Wait for window load
+        $(window).load(function () {
+            // Animate loader off screen
+            $(".se-pre-con").fadeOut("slow");
+            ;
+        });
+    </script>
+    <!--<script src="./js/configuracion.js"></script>-->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../../components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../../components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../../../js/sb-admin-2.js"></script>
+
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>-->
+
+    <script src="../../../js/angular-1.4.6.min.js"></script>
+
+
+    <!--Script Angular Perfil-->
+    <script src="../../../js/control/permanencia/seguimiento/ajsReportes.js"></script>
+
+    <script src="../../../js/sweetalert.min_1.js"></script>
+    <script src="../../../js/SweetAlert.min.js"></script>
+    <script src="../../../js/angular-locale_es-mx.js"></script>
+    <script src="../../../js/ui-bootstrap-tpls-0.14.3.js"></script>
+
+    <script>
+        let miCanvas = document.getElementById('myChart')
+
+        const myChart = new Chart(
+            miCanvas,
+            config
+        );
+
+        let miCanvas2 = document.getElementById('myChart2')
+
+        const myChart2 = new Chart(
+            miCanvas2,
+            config2
+        );
+
+    </script>
+</body>
+
+</html>

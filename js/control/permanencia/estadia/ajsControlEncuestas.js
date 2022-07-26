@@ -4,6 +4,7 @@ sisa.controller("ControlEncuesta", ['$rootScope', '$scope', '$http', 'SweetAlert
     $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
     $scope.encuesta = [];
     $scope.radio1 = false;
+    $scope.verEncuesta = false
     $scope.preguntaPrueba = {
         respuesta: ""
     }
@@ -31,12 +32,12 @@ sisa.controller("ControlEncuesta", ['$rootScope', '$scope', '$http', 'SweetAlert
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Aceptar",
             cancelButtonText: "Cancelar",
-            closeOnConfirm: false,
+            closeOnConfirm: true,
             closeOnCancel: true,
-
         }, function (isConfirm) {
             if (isConfirm) {
-                console.log("hola")
+                $scope.verEncuesta = true
+                $scope.mostrarEncuesta()
             } else {
                 console.log("okis")
             }
@@ -130,15 +131,71 @@ sisa.controller("ControlEncuesta", ['$rootScope', '$scope', '$http', 'SweetAlert
                                     tipos_respuestas: "Numerico",
                                 }
                             ]
-                        }
+                        },
+                        {
+                            id: 2,
+                            enunciado: "¿El apoyo que te brindó la empresa o institución respecto a las herramientas necesarias (equipo de oficina, seguridad, herramientas, material, etc.) para realizar tus actividades durante el periodo de estadía te pareció?",
+                            indice: 2,
+                            tipos_respuestas: "Escala"
+                        },
+                        {
+                            id: 3,
+                            enunciado: " ¿El tiempo estimado que le dedicaste a tu proyecto durante la estadía en la empresa o institución, te pareció?",
+                            indice: 3,
+                            tipos_respuestas: "Escala"
+                        },
                     ]
                 },
                 {
                     id: 6,
                     nombre: "Asesora / Asesor",
                     descripcion: "En este apartado evaluarás la atención proporcionada por el asesor",
-                    indice: 2
-                }
+                    indice: 2,
+                    preguntas: [
+                        {
+                            id: 1,
+                            enunciado: "¿En general la atención y/o orientación de tu asesora / asesor  universitario, te pareció?",
+                            indice: 1,
+                            tipos_respuestas: "Escala"
+                        },
+                        {
+                            id: 2,
+                            enunciado: "¿Tu asesora / asesor universitario te informó y orientó acerca del proyecto, los formatos y trámites que debías seguir?",
+                            indice: 3,
+                            tipos_respuestas: "SiNo"
+                        },
+                        {
+                            id: 3,
+                            enunciado: "¿Tu asesora o asesor universitario te presentó en la empresa o institución al inicio de tu estadía (vía correo electrónico)?",
+                            indice: 2,
+                            tipos_respuestas: "SiNo"
+                        },
+                        {
+                            id: 4,
+                            enunciado: "Especifica el número total visitas que la asesora / asesor universitario te realizó en la empresa o institución:",
+                            indice: 4,
+                            tipos_respuestas: "Select",
+                            respuestas: [
+                                {
+                                    id: 1,
+                                    descripcion: "Ninguna"
+                                },
+                                {
+                                    id: 2,
+                                    descripcion: "1"
+                                },
+                                {
+                                    id: 3,
+                                    descripcion: "2"
+                                },
+                                {
+                                    id: 4,
+                                    descripcion: "3 o más"
+                                },
+                            ]
+                        },
+                    ]
+                },
             ]
         }
         $scope.encuesta = encuesta;
