@@ -241,7 +241,8 @@
                             </div>
                             <div class="col-md-12 text-center" id="descripcionEncuesta" style="margin-bottom: 30px;">
                                 <p>
-                                    Tomando en cuenta TU PERIODO DE ESTADÍA, expresa tu opinión acerca de los distintos
+                                    Tomando en cuenta <b>TU PERIODO DE ESTADÍA</b>, expresa tu opinión acerca de los
+                                    distintos
                                     sectores que estuvieron presentes en cada uno de los siguientes aspectos.
                                 </p>
                                 <p class="text-red">
@@ -257,7 +258,7 @@
                                 <button class="btn btn-success" ng-click="comenzarEncuesta()">Comenzar</button>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 40px; padding: 20px;">
+                        <div class="row" style="margin-top: 30px; padding-right: 20px; padding-left: 20px;">
                             <div class="alert alert-warning text-center" role="alert" style="font-weight: bolder;">
                                 Para asegurar el correcto funcionamiento se recomienda no hacer uso del navegador
                                 Internet Explorer
@@ -269,6 +270,7 @@
                             <li ng-repeat="seccion in encuesta.secciones | orderBy:'indice'"
                                 ng-class="{'active': seccion.indice === 1, 'disabled': !formSeccion.$valid && seccion.indice != 1}">
                                 <a href=" {{ '#' + seccion.indice }}"
+                                    ng-style="{ 'pointer-events': formSeccion.$invalid && seccion.indice != 1 ? 'none' : 'all' }"
                                     data-toggle="tab" ng-bind="seccion.nombre"></a>
                             </li>
                             <li>
@@ -283,6 +285,7 @@
                                     <div>
                                         <span style="font-weight: bolder;">Instrucciones: </span>
                                         <span ng-bind="seccion.descripcion"></span>
+                                        <span>.</span>
                                     </div>
                                     <p ng-if="seccion.nombre == 'Empresa'" style="margin-top: 10px;">
                                         <span style="font-weight: bolder;">Nombre de la empresa: </span>
@@ -314,7 +317,8 @@
                                                                 <strong>1</strong>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" value="1" name="{{ 'escala' + pregunta.indice }}"
+                                                                <input type="radio" value="1"
+                                                                    name="{{ 'escala' + pregunta.indice }}" ng-model="estado['resp'+pregunta.indice]"
                                                                     class="radio2" required>
                                                             </div>
                                                         </label>
@@ -323,7 +327,8 @@
                                                                 <strong>2</strong>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" value="2" name="{{ 'escala' + pregunta.indice }}"
+                                                                <input type="radio" value="2"
+                                                                    name="{{ 'escala' + pregunta.indice }}" ng-model="estado['resp'+pregunta.indice]"
                                                                     class="radio2" required>
                                                             </div>
                                                         </label>
@@ -332,7 +337,8 @@
                                                                 <strong>3</strong>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" value="3" name="{{ 'escala' + pregunta.indice }}"
+                                                                <input type="radio" value="3"
+                                                                    name="{{ 'escala' + pregunta.indice }}" ng-model="estado['resp'+pregunta.indice]"
                                                                     class="radio2" required>
                                                             </div>
                                                         </label>
@@ -341,7 +347,8 @@
                                                                 <strong>4</strong>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" value="4" name="{{ 'escala' + pregunta.indice }}"
+                                                                <input type="radio" value="4"
+                                                                    name="{{ 'escala' + pregunta.indice }}" ng-model="estado['resp'+pregunta.indice]"
                                                                     class="radio2" required>
                                                             </div>
                                                         </label>
@@ -350,7 +357,8 @@
                                                                 <strong>5</strong>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" value="5" name="{{ 'escala' + pregunta.indice }}"
+                                                                <input type="radio" value="5"
+                                                                    name="{{ 'escala' + pregunta.indice }}" ng-model="estado['resp'+pregunta.indice]"
                                                                     class="radio2" required>
                                                             </div>
                                                         </label>
@@ -373,8 +381,8 @@
                                                 <!-- preguntas libres -->
                                                 <div style="margin-bottom: 20px; margin-top: 20px;"
                                                     ng-if="pregunta.tipos_respuestas == 'Libre'">
-                                                    <textarea class="form-control" rows="3" required></textarea>
-
+                                                    <textarea name="{{ 'libre' + pregunta.indice }}" ng-model="estado['resp'+pregunta.indice]" 
+                                                    class="form-control" rows="3" required></textarea>
                                                 </div>
                                                 <!-- preguntas de opcion múltiple -->
                                                 <div style="margin-bottom: 20px; margin-top: 20px;"
@@ -385,7 +393,6 @@
                                                             value="{{respuesta.descripcion}}" id="defaultCheck1">
                                                         <label class="form-check-label" for="defaultCheck1"
                                                             ng-bind="respuesta.descripcion">
-
                                                         </label>
                                                     </div>
                                                 </div>
@@ -394,18 +401,24 @@
                                                     ng-if="pregunta.tipos_respuestas == 'SiNo'">
                                                     <label class="checkbox-inline">
                                                         <strong>Sí</strong>
-                                                        <input type="radio" value="Si" name="{{ 'estadoResp' + pregunta.indice }}" ng-model="{{ 'resp' + pregunta.indice }}"
-                                                            class="radio2" required>
+                                                        <input type="radio" value="Si"
+                                                            name="{{ 'estadoResp' + pregunta.indice }}"
+                                                            ng-model="estado['resp'+pregunta.indice]" class="radio2"
+                                                            ng-change="cambio(estado['resp'+pregunta.indice])" required>
                                                     </label>
                                                     <label class="checkbox-inline">
                                                         <strong>No</strong>
-                                                        <input type="radio" value="No" name="{{ 'estadoResp' + pregunta.indice }}"
-                                                            class="radio2" required>
+                                                        <input type="radio" value="No"
+                                                            name="{{ 'estadoResp' + pregunta.indice }}"
+                                                            ng-model="estado['resp'+pregunta.indice]" class="radio2"
+                                                            ng-change="cambio(estado['resp'+pregunta.indice])" required>
                                                     </label>
                                                 </div>
                                                 <!-- subpreguntas -->
-                                                <div ng-show="preguntaPrueba.respuesta == 'Si'">
-                                                    <div ng-repeat="subpregunta in pregunta.subpreguntas"
+                                                <div ng-if="valorP == 'Si'">
+                                                    <div class="col-xs-12 col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"
+                                                        style="height: 150px;"
+                                                        ng-repeat="subpregunta in pregunta.subpreguntas"
                                                         style="height: 150px;">
                                                         <span>{{pregunta.indice}}.{{$index+1}}
                                                             {{subpregunta.enunciado}}</span>
@@ -430,14 +443,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row" ng-if="$index == 0">
                                         <div class="col-md-4 col-md-offset-8 text-center">
-                                            <button class="btn btn-success" ng-click=""
-                                                ng-disabled="!formSeccion.$valid">Siguiente</button>
+                                            <button class="btn btn-success" 
+                                                ng-disabled="formSeccion.$invalid || formSeccion.$pending">Siguiente</button>
                                         </div>
                                     </div>
                                     <div class="row" ng-if="$index != 0 && $index != encuesta.secciones.length-1 ">
@@ -470,9 +482,10 @@
                                         <p style="margin-bottom: 20px;">Una vez enviadas tus respuestas no podrán ser
                                             modificadas</p>
                                         <div class="col-md-12 text-center">
+                                            <button type="button" class="btn btn-danger" ng-click="">Aceptar</button>
                                             <button type="button" class="btn btn-secondary"
                                                 ng-click="">Cancelar</button>
-                                            <button type="button" class="btn btn-danger" ng-click="">Aceptar</button>
+
                                         </div>
                                     </div>
                                 </div>

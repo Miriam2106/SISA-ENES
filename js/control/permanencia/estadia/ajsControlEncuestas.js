@@ -4,9 +4,15 @@ sisa.controller("ControlEncuesta", ['$rootScope', '$scope', '$http', 'SweetAlert
     $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
     $scope.encuesta = [];
     $scope.radio1 = false;
+    $scope.valor = "";
     $scope.verEncuesta = false
     $scope.preguntaPrueba = {
         respuesta: ""
+    }
+
+    $scope.cambio = (valor) =>{
+        console.log(valor)
+        $scope.valorP = valor;
     }
 
     $scope.cambiarEstado = function () {
