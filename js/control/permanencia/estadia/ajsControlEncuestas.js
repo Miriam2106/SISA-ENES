@@ -10,10 +10,16 @@ sisa.controller("ControlEncuesta", ['$rootScope', '$scope', '$http', 'SweetAlert
         respuesta: ""
     }
 
-    $scope.cambio = (valor) =>{
+    $scope.cambio = (valor) => {
         console.log(valor)
         $scope.valorP = valor;
     }
+
+    $(window).load(function () {
+        // Animate loader off screen
+        $(".se-pre-con").fadeOut("slow");
+        ;
+    });
 
     $scope.cambiarEstado = function () {
         $scope.radio1 = !$scope.radio1;
@@ -27,6 +33,28 @@ sisa.controller("ControlEncuesta", ['$rootScope', '$scope', '$http', 'SweetAlert
         $scope.encuesta.nombreAlumno = "Miriam Guadalupe Saucedo Bustamante"
         $scope.encuesta.carreraPerfil = "Desarrollo De Software Multiplataforma"
         $scope.encuesta.grupo = "6B"
+    };
+
+    $scope.classActive = function (clase) {
+        console.log(clase)
+        let head = document.getElementById(`head${clase}`)
+        let redirect = document.getElementById(`redirect${clase}`)
+        let headRemovido = document.getElementById(`head${clase-1}`)
+
+        head.className="ng-scope active"
+        redirect.style.cssText = "pointer-events: all;"
+        headRemovido.className="ng-scope"
+
+    };
+
+    $scope.classFinalizar = function (clase) {
+        let head = document.getElementById("headFinalizar")
+        let redirect = document.getElementById("redirectFinalizar")
+        let headRemovido = document.getElementById(`head${clase}`)
+
+        head.className="active"
+        redirect.style.cssText = "pointer-events: all;"
+        headRemovido.className="ng-scope"
     };
 
     $scope.comenzarEncuesta = function () {
@@ -50,9 +78,9 @@ sisa.controller("ControlEncuesta", ['$rootScope', '$scope', '$http', 'SweetAlert
         });
     }
 
-    $scope.change = function() {
+    $scope.change = function () {
         console.log($scope.sino);
-   }
+    }
 
     $scope.mostrarEncuesta = function () {
         let encuesta = {

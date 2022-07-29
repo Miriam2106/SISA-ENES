@@ -268,19 +268,23 @@
                     <div ng-show="verEncuesta">
                         <ul class="nav nav-tabs">
                             <li ng-repeat="seccion in encuesta.secciones | orderBy:'indice'"
-                                ng-class="{'active': seccion.indice === 1, 'disabled': !formSeccion.$valid && seccion.indice != 1}">
-                                <a href=" {{ '#' + seccion.indice }}"
-                                    ng-style="{ 'pointer-events': formSeccion.$invalid && seccion.indice != 1 ? 'none' : 'all' }"
-                                    data-toggle="tab" ng-bind="seccion.nombre"></a>
+                                ng-class="{'active': seccion.indice === 1, 'disabled': (!formSeccion.$valid || formSeccion.$pending) && seccion.indice != 1}"
+                                id="{{'head'+seccion.indice}}"
+                                ng-class="{'active': seccion.indice === 1 || formSeccion.$valid, 'disabled': (!formSeccion.$valid || formSeccion.$pending) && seccion.indice != 1}">
+                                <a ng-href="{{ '#tab' + seccion.indice  }}" data-toggle="tab" ng-bind="seccion.nombre" id="{{'redirect'+seccion.indice}}"
+                                ng-style="{ 'pointer-events': !formSeccion.$valid && seccion.indice != 1 ? 'none' : 'all' }">
+                                </a>
                             </li>
-                            <li>
-                                <a href="#finalizar" data-toggle="tab">Finalizar</a>
+                            <li class="disabled" id="headFinalizar">
+                                <a ng-href="#finalizar" class="disabled" data-toggle="tab" id="redirectFinalizar"
+                                ng-style="{ 'pointer-events': !formSeccion.$valid && seccion.indice != 1 ? 'none' : 'all' }">
+                                Finalizar</a>
                             </li>
                         </ul>
                         <div class="tab-content" style="margin-top: 20px;">
                             <div class="tab-pane" ng-repeat="seccion in encuesta.secciones | orderBy:'indice'"
-                                id="{{seccion.indice}}"
-                                ng-class="{'active': seccion.indice === 1, 'disabled': !formSeccion.$valid && seccion.indice != 1 }">
+                                id="{{'tab'+seccion.indice}}"
+                                ng-class="{'active': seccion.indice === 1 || formSeccion.$valid }">
                                 <form role="form" name="formSeccion">
                                     <div>
                                         <span style="font-weight: bolder;">Instrucciones: </span>
@@ -298,7 +302,6 @@
                                             VELÁSQUEZ</span>
                                     </p>
                                     <div style="margin-top: 20px;">
-                                        <!--<input type="text" class="form-control" id="sexo"  value="{{perfil.sexo}}" />-->
                                         <div class="row">
                                             <!-- itera las preguntas -->
                                             <div class="col-xs-12 col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"
@@ -384,14 +387,14 @@
                                                     <textarea name="{{ 'libre' + pregunta.indice }}" ng-model="estado['resp'+pregunta.indice]" 
                                                     class="form-control" rows="3" required></textarea>
                                                 </div>
-                                                <!-- preguntas de opcion múltiple -->
+                                                <!-- preguntas de opcion múltiple - CHECKBOX -->
                                                 <div style="margin-bottom: 20px; margin-top: 20px;"
                                                     ng-if="pregunta.tipos_respuestas == 'Multiple'">
                                                     <div class="form-check"
                                                         ng-repeat="respuesta in pregunta.respuestas">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            value="{{respuesta.descripcion}}" id="defaultCheck1">
-                                                        <label class="form-check-label" for="defaultCheck1"
+                                                        <input class="form-check-input" type="checkbox" ng-model="estado['resp'+pregunta.indice]"
+                                                            value="{{respuesta.descripcion}}" ng-change="cambio(respuesta.descripcion)" required>
+                                                        <label class="form-check-label"
                                                             ng-bind="respuesta.descripcion">
                                                         </label>
                                                     </div>
@@ -403,19 +406,19 @@
                                                         <strong>Sí</strong>
                                                         <input type="radio" value="Si"
                                                             name="{{ 'estadoResp' + pregunta.indice }}"
-                                                            ng-model="estado['resp'+pregunta.indice]" class="radio2"
-                                                            ng-change="cambio(estado['resp'+pregunta.indice])" required>
+                                                            ng-model="estado['res'+pregunta.indice]" class="radio2"
+                                                            ng-change="cambio(estado['res'+pregunta.indice])" required>
                                                     </label>
                                                     <label class="checkbox-inline">
                                                         <strong>No</strong>
                                                         <input type="radio" value="No"
                                                             name="{{ 'estadoResp' + pregunta.indice }}"
-                                                            ng-model="estado['resp'+pregunta.indice]" class="radio2"
-                                                            ng-change="cambio(estado['resp'+pregunta.indice])" required>
+                                                            ng-model="estado['res'+pregunta.indice]" class="radio2"
+                                                            ng-change="cambio(estado['res'+pregunta.indice])" required>
                                                     </label>
                                                 </div>
                                                 <!-- subpreguntas -->
-                                                <div ng-if="valorP == 'Si'">
+                                                <div ng-show="valorP === 'Si'">
                                                     <div class="col-xs-12 col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"
                                                         style="height: 150px;"
                                                         ng-repeat="subpregunta in pregunta.subpreguntas"
@@ -448,27 +451,29 @@
                                     </div>
                                     <div class="row" ng-if="$index == 0">
                                         <div class="col-md-4 col-md-offset-8 text-center">
-                                            <button class="btn btn-success" 
-                                                ng-disabled="formSeccion.$invalid || formSeccion.$pending">Siguiente</button>
+                                            
+                                                <button class="btn btn-success" type="button" ng-disabled="formSeccion.$invalid || formSeccion.$pending" data-toggle="tab" href="{{ '#tab' + (seccion.indice+1)  }}" ng-click="classActive(seccion.indice+1)"
+                                                >Siguiente</button>
+                                            
                                         </div>
                                     </div>
                                     <div class="row" ng-if="$index != 0 && $index != encuesta.secciones.length-1 ">
                                         <div class="col-md-4 col-md-offset-8 text-center">
                                             <button class="btn btn-warning" ng-click="">Regresar</button>
                                             <button ng-disabled="!formSeccion.$valid" class="btn btn-success"
-                                                ng-click="">Siguiente</button>
+                                            data-toggle="tab" href="{{ '#tab' + (seccion.indice+1)  }}" ng-click="classActive(seccion.indice+1)" >Siguiente</button>
                                         </div>
                                     </div>
                                     <div class="row" ng-if="$index == encuesta.secciones.length-1">
                                         <div class="col-md-4 col-md-offset-8 text-center">
                                             <button class="btn btn-warning" ng-click="">Regresar</button>
                                             <button ng-disabled="!formSeccion.$valid" class="btn btn-success"
-                                                ng-click="">Finalizar</button>
+                                            data-toggle="tab" href="#finalizar" ng-click="classFinalizar(seccion.indice)">Finalizar</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="tab-pane" id="finalizar">
+                            <div class="tab-pane" id="finalizar" class="disabled">
                                 <div class="row" style="padding: 20px;">
                                     <div class="alert alert-warning text-center" role="alert"
                                         style="font-weight: bolder;">
@@ -510,16 +515,14 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script> -->
     <script src="../../../components/jquery/dist/jquery.min.js"></script>
     <script>
         //paste this code under the head tag or in a separate js file.
         // Wait for window load
-        $(window).load(function () {
-            // Animate loader off screen
-            $(".se-pre-con").fadeOut("slow");
-            ;
-        });
+       
     </script>
     <!--<script src="./js/configuracion.js"></script>-->
 
